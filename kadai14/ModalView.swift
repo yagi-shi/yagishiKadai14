@@ -1,9 +1,9 @@
 import SwiftUI
 
 struct ModalView: View {
-    @Binding var fruits: [(name: String, isSelected: Bool)]
-    @State var newFruit: String
-    @Environment (\.presentationMode) var presentaionMode
+    @State var newFruit: String = ""
+    @Environment (\.presentationMode) var presentationMode
+    var onSave: (String) -> Void
 
     var body: some View {
         NavigationStack {
@@ -18,21 +18,20 @@ struct ModalView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button("Cancel") {
-                        presentaionMode.wrappedValue.dismiss()
+                        presentationMode.wrappedValue.dismiss()
                     }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Save") {
                         if !newFruit.isEmpty {
-                            fruits.append((name: newFruit, isSelected: false))
-                            presentaionMode.wrappedValue.dismiss()
-                        } else {
-                            presentaionMode.wrappedValue.dismiss()
+                            onSave(newFruit)
                         }
+                        presentationMode.wrappedValue.dismiss()
                     }
                 }
             }
-                Spacer(minLength: 50)
+
+            Spacer(minLength: 50)
         }
     }
 }
