@@ -34,7 +34,9 @@ struct ContentView: View {
                         isShowModal = true
                     }
                     .fullScreenCover(isPresented: $isShowModal) {
-                        ModalView(fruits: $fruits, newFruit: "")
+                        ModalView(onSave: {
+                            fruits.append((name: $0, isSelected: false))
+                        })
                     }
                 }
             }
